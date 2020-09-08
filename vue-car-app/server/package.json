@@ -1,0 +1,18 @@
+{
+  "name": "nhtsa-api-server",
+  "version": "1.0.0",
+  "description": "express server to communicate with NHTSA APIs",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Feng You",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "car-app": "file:../../car-app",
+    "cors": "^2.8.5",
+    "express": "^4.17.1"
+  }
+}

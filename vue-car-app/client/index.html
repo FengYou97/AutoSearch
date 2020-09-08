@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>NHTSA Vehicle Type Search</title>
+
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    </head>
+
+    <body>
+        <div id="cars" v-cloak>
+            <div class="jumbotron jumbotron-fluid">
+                 <!-- Application Title and tagline-->
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg">
+                            <h1 class="display-2">{{ appName }}</h1>
+                            <p class="lead">Search for vehicle types made by a vehicle manufacturer using the NHTSA API</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div v-cloak class="container">
+                <div class="row">
+                    <div class="col-lg-8">
+                        
+                        <!-- search box -->
+                        <div v-show="!isSearching" class="row">
+                            <input type="text" 
+                                    v-model="searchName" 
+                                    class="form-control mb-2 rounded-0" 
+                                    id="searchName"
+                                    placeholder="Enter vehicle make">
+                        </div>
+
+                        <!-- search results, allows user to select a single result -->
+                        <div v-show="isSearching">
+                            <div class="row" v-show="!fetchResult.Results" v-for="manufacturer in filteredResults">
+                                <div class="col">
+                                    <h4>{{ manufacturer.MakeName }}</h4>
+                                </div>
+                                    
+                                <div class="col">
+                                    <input
+                                        v-model="selected"
+                                        type="radio"
+                                        :value="manufacturer.MakeId"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                   
+                        <!-- fetch results -->
+                        <div v-show="fetchResult.Results !== undefined">
+                            <div class="row">
+                                <div class="col">
+                                    <img v-bind:src="image" width="80%" />
+                                </div>
+
+                                <div class="col">
+                                    <h3><strong>Manufacturer Name:</strong> {{ selectedMake }}</h3>
+                                    <p></p>
+                                    <p><strong>Vehicle types produced:</strong>
+                                        <ul v-for="type in fetchResult.Results">
+                                            {{ type.VehicleTypeName }}
+                                        </ul>
+                                    </p>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- show appropriate elements to show during search -->
+                        <section> 
+                            <span v-show="!isSearching">                             
+                                <button @click="search" class="btn btn-dark">Search</button>
+                            </span>
+
+                            <span v-show="fetchable">
+                                <div class="row text-info">
+                                    <h5>Search Results: <strong>{{ searchResultNum }}</strong></h5>
+                                </div>
+                            </span>
+
+                            <span v-show="isSearching">
+                                <button  @click="reload" class="btn btn-dark">Search Again</button>
+                            </span>
+
+                            <span v-show="fetchable">                               
+                                <button @click="fetch" class="btn btn-dark">Fetch</button>
+                            </span>
+                        <section>
+
+                    </div>
+
+                    <div class="col-lg-3 col bg-dark border-left">
+                        <!-- search history tracker component from app.js -->
+                        <tracker-component v-bind:history-tracker="searchHistory"></tracker-component>
+                        
+                        <div class="row text-light">
+                            <h5 class="mx-auto mt-2">Previous searches: {{ fetchNum }}</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://unpkg.com/vue@2.6.11/dist/vue.js"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script type="text/javascript" src="app.js"></script>
+    </body>
+</html>
