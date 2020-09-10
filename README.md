@@ -6,4 +6,4 @@ AutoSearch is a JavaScript application that runs in Node.js and incorporates the
 - Utilized **Node.js** to handle **asynchronous callbacks** to external database.
 - Performed GET requests to NHTSA Vehicle API using **npm superagent**.
 - Created and implemented logic to autocomplete search queries and deduplicate duplicate information in **JSON** response.
-- Developed webpage as project front-end and to improve user experience.
+- Developed webpage using **Vue.js** as project front-end and to improve user experience.
